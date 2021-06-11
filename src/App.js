@@ -1,65 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-const App = () => {
-  const course = {
-   name: 'Half Stack application development',
-   parts: [
-     {
-       name: 'Fundamentals of React',
-       exercises: 10
-     },
-     {
-       name: 'Using props to pass data',
-       exercises: 7
-     },
-     {
-       name: 'State of a component',
-       exercises: 14
-     }
-   ]
- }
-
-  return (
-    <div>
-    <Header course={course.name} />
-    <Content parts={course.parts}/>
-    <Total exercises={course.parts} />
-    </div>
-  );
+const Header = (message) => <><h1>{message.content}</h1></>
+const Statistic = (props) => <><tr><td>{props.type}</td><td>{props.value}{props.type==="positive" ? "%" : ""}</td></tr></>
+const Button = (props) => <><button onClick={props.handleClick}>{props.text}</button> </>
+const Statistics = (props) =>{
+  const allcnt= props.gcnt+props.ncnt+props.bcnt;
+  if(allcnt > 0)
+  return (<table><Statistic type="good" value={props.gcnt} />
+  <Statistic type="neutral" value={props.ncnt} />
+  <Statistic type="bad" value={props.bcnt} />
+  <Statistic type="all" value={allcnt} />
+  <Statistic type="average" value={ (props.gcnt-props.bcnt)/allcnt} />
+  <Statistic type="positive" value={ 100*props.gcnt/allcnt} />
+  </table>)
+  return <>No Feedback given</>
 }
+const App = () =>{
+  const content = "give feedback";
+  const [goodcnt, setGood] = useState(0);
+  const [neutralcnt, setNeutral] = useState(0);
+  const [badcnt, setBad] = useState(0);
+  const [allcnt,setAllCnt] = useState(0);
+  const content1 = "statistics";
 
-const Header= (props) => {
-  return (
-    <>
-      <h1> {props.course}  </h1>
-    </>
-  );
-}
+  const avg = () => allcnt===0 ? 0 : (goodcnt *1 + neutralcnt*0 - badcnt *1)/allcnt;
+  const positivepct = () => (allcnt===0 ? 0 : 100 * goodcnt/allcnt) + "%";
+  const incGood = () => {setGood(goodcnt + 1);
+    setAllCnt(allcnt + 1);}
+const incBad = () => {setBad(badcnt + 1);setAllCnt(allcnt + 1);}
+const incNeutral = () => {setNeutral(neutralcnt + 1);
+  setAllCnt(allcnt + 1);}
 
-const Content =(parts) => {
- //console.log(parts.parts[0].name)
-  return(
-      <>
-        <Part part_name={parts.parts[0].name} excercises={parts.parts[0].exercises} />
-        <Part part_name={parts.parts[1].name} excercises={parts.parts[1].exercises} />
-        <Part part_name={parts.parts[2].name} excercises={parts.parts[2].exercises} />
-      </>
-    );
-}
 
-const Total = (props) =>{
-  return (<>
-    <p>Number of exercises {props.exercises[0].exercises + props.exercises[1].exercises + props.exercises[2].exercises}</p>
-  </>);
-}
-
-const Part =(props) => {
-  return (
-    <>
-    <p>
-       {props.part_name} {props.excercises}
-    </p>
-    </>
-  )
+return ( <div>
+  <Header content={content} />
+  <Button handleClick={incGood} text={"good"} />
+  <Button handleClick={incNeutral} text={"neutral"} />
+  <Button handleClick={incBad} text={"bad"} />
+  <Header content="statistics" />
+    <Statistics gcnt={goodcnt} bcnt={badcnt} ncnt={neutralcnt} />
+  </div>)
 }
 export default App;
