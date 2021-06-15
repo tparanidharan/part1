@@ -7,14 +7,17 @@ const App = () => {
   const [searchText, setSearchText] = useState('')
 
   const SearchCountry=(event)=>{
-    if(event.target.value.length > 0)
       setSearchText(event.target.value)
 
+  }
+  const selectCountry=(countrySelected)=>{
+      console.log("countrySelected",countrySelected)
+      setSearchText(countrySelected)
   }
 
   return <><p>Will return soon!!!!</p>
   <SearchForm header="Search Country" textValue={searchText} handleChange={SearchCountry} />
-  <SearchResult searchText={searchText} />
+  <SearchResult searchText={searchText} handleSelectSearch={selectCountry} />
   </>
 
 }

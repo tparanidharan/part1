@@ -1,6 +1,6 @@
 import react, {useEffect, useState} from 'react'
 import axios from 'axios'
-const SearchResult = ({searchText}) =>
+const SearchResult = ({searchText,handleSelectSearch}) =>
 {
   const[searchRes, setSearchRes] = useState([])
   useEffect(()=>{
@@ -11,10 +11,12 @@ const SearchResult = ({searchText}) =>
     axios.get(API_URL)
     .then(response => setSearchRes(response.data.filter((country)=> country.name.toLowerCase().includes(searchText.toLowerCase()))))
   } ,[searchText])
+let newSearchText=""
 
+const setNewSearchText = (data) => handleSelectSearch(data)
 console.log("result lenght",searchRes.length)
 console.log("result ",searchRes)
-if(searchRes.length>0) searchRes[0].languages.map((lang)=>console.log(lang.name))
+//if(searchRes.length>0) searchRes[0].languages.map((lang)=>console.log(lang.name))
 
  if(searchText.length>0){
     if(searchRes.length === 0 )
@@ -31,7 +33,7 @@ if(searchRes.length>0) searchRes[0].languages.map((lang)=>console.log(lang.name)
     else if(searchRes.length>10)
       return <><p> Too many matches found, please provide more inputs</p></>
     else
-      return <>{searchRes.map((country) => <p>{country.name}</p>)}</>
+      return <>{searchRes.map((country) =>  <p>{country.name} <button type="submit" onClick={()=>setNewSearchText(country.name)}>show</button></p>)} </>
 }
   else
     return <></>
