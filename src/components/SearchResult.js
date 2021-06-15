@@ -13,7 +13,6 @@ const SearchResult = ({searchText,handleSelectSearch}) =>
   } ,[searchText])
 let newSearchText=""
 
-const setNewSearchText = (data) => handleSelectSearch(data)
 console.log("result lenght",searchRes.length)
 console.log("result ",searchRes)
 //if(searchRes.length>0) searchRes[0].languages.map((lang)=>console.log(lang.name))
@@ -33,7 +32,7 @@ console.log("result ",searchRes)
     else if(searchRes.length>10)
       return <><p> Too many matches found, please provide more inputs</p></>
     else
-      return <>{searchRes.map((country) =>  <p>{country.name} <button type="submit" onClick={()=>setNewSearchText(country.name)}>show</button></p>)} </>
+      return <>{searchRes.map((country) =>  <p>{country.name} <button type="submit" onClick={()=>handleSelectSearch(country.name)}>show</button></p>)} </>
 }
   else
     return <></>
