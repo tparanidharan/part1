@@ -1,21 +1,19 @@
-import react, {useEffect, useState} from 'react'
+import react, {useState, useEffect} from 'react'
 import axios from 'axios'
-const SearchResult = ({searchText,handleSelectSearch}) =>
+const SearchResult = ({searchText,handleSelectSearch,allCountries}) =>
 {
-  const[searchRes, setSearchRes] = useState([])
-  useEffect(()=>{
-    console.log("Inside UseEffect")
-    console.log("Search Data", searchText)
-    const API_URL = `https://restcountries.eu/rest/v2/all`
-    console.log(API_URL)
-    axios.get(API_URL)
-    .then(response => setSearchRes(response.data.filter((country)=> country.name.toLowerCase().includes(searchText.toLowerCase()))))
-  } ,[searchText])
-let newSearchText=""
+let searchRes = []
+ if(allCountries.length > 0 ){
+  searchRes = allCountries.filter((country)=> country.name.toLowerCase() === searchText.toLowerCase())
+  console.log("result lenght",searchRes.length)
+  console.log("result ",searchRes)
+  if(searchRes.length === 0 )
+  {
+    searchRes = allCountries.filter((country)=> country.name.toLowerCase().includes(searchText.toLowerCase()))
+  }
 
-console.log("result lenght",searchRes.length)
-console.log("result ",searchRes)
-//if(searchRes.length>0) searchRes[0].languages.map((lang)=>console.log(lang.name))
+}
+
 
  if(searchText.length>0){
     if(searchRes.length === 0 )

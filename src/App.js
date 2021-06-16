@@ -5,8 +5,19 @@ import SearchResult from './components/SearchResult'
 const App = () => {
   console.log("jio")
   const [searchText, setSearchText] = useState('')
+  const[allCountries, setAllCountries] = useState([])
+  useEffect(()=>{
+    console.log("Inside UseEffect")
+    const API_URL = `https://restcountries.eu/rest/v2/all`
+    axios.get(API_URL)
+    .then(response => {
+      setAllCountries(response.data)
+      console.log("All countries length after data assigned ",response.data.length)
+    })
+  } ,[])
 
   const SearchCountry=(event)=>{
+      console.log("Search Text: ",searchText)
       setSearchText(event.target.value)
 
   }
@@ -14,10 +25,10 @@ const App = () => {
       console.log("countrySelected",countrySelected)
       setSearchText(countrySelected)
   }
-
+console.log(allCountries.length);
   return <><p>Will return soon!!!!</p>
-  <SearchForm header="Search Country" textValue={searchText} handleChange={SearchCountry} />
-  <SearchResult searchText={searchText} handleSelectSearch={selectCountry} />
+  <SearchForm header="Search Country" handleChange={SearchCountry} textValue={searchText} />
+  <SearchResult searchText={searchText} handleSelectSearch={selectCountry} allCountries={allCountries}/>
   </>
 
 }
