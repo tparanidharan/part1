@@ -17,7 +17,6 @@ let searchRes = []
 }
 
 
-
  if(searchText.length>0){
     if(searchRes.length === 0 )
       return <><p> Sorry no match found</p></>
