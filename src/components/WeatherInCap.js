@@ -22,7 +22,7 @@ const WeatherInCap=({capitalName}) =>{
       })
   },[])
   if(Object.keys(cityTemp).length !== 0){
-    return <><p><b>temperature: </b> {cityTemp.current.temperature}</p>
+    return <><p><b>temperature: </b> {cityTemp.current.temperature} Celcius</p>
     <img src={cityTemp.current.weather_icons[0]} alt={`Temperature in ${cityTemp.request.query}`} />
     <p><b> wind: </b>{cityTemp.current.wind_speed} mph direction {cityTemp.current.wind_dir}  </p>
     </>
