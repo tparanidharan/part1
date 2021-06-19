@@ -1,5 +1,7 @@
 import react, {useState, useEffect} from 'react'
 import axios from 'axios'
+import WeatherInCap from './WeatherInCap'
+
 const SearchResult = ({searchText,handleSelectSearch,allCountries}) =>
 {
 let searchRes = []
@@ -15,6 +17,7 @@ let searchRes = []
 }
 
 
+
  if(searchText.length>0){
     if(searchRes.length === 0 )
       return <><p> Sorry no match found</p></>
@@ -25,7 +28,9 @@ let searchRes = []
         <h2>languages</h2> <ul>
         {searchRes[0].languages.map((lang)=><li>{lang.name}</li>)}
         </ul>
-        <img src={searchRes[0].flag} height="90px" width="115px"/>
+        <img src={searchRes[0].flag} height="90px" width="115px" alt={`Flag of ${searchRes[0].name}`}/>
+        <h2> Weather in {searchRes[0].capital}</h2>
+        <WeatherInCap capitalName={searchRes[0].capital} />
         </>
     else if(searchRes.length>10)
       return <><p> Too many matches found, please provide more inputs</p></>
