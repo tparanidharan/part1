@@ -26,7 +26,7 @@ const App = () => {
       setSearchText(countrySelected)
   }
 console.log(allCountries.length);
-  return <><p>Will return soon!!!!</p>
+  return <>
   <SearchForm header="Search Country" handleChange={SearchCountry} textValue={searchText} />
   <SearchResult searchText={searchText} handleSelectSearch={selectCountry} allCountries={allCountries}/>
   </>
