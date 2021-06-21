@@ -4,11 +4,16 @@ import PersonForm from './components/PersonForm'
 import DisplayContact from './components/DisplayContact'
 import SearchNamePart from './components/SearchNamePart'
 import ServiceHandler from './services/ServiceHandler'
+import NotifyUser from './components/NotifyUser'
+
+
 const App = () => {
   const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newPhoneno, setnewPhoneno ] = useState('')
   const [ searchName, setSearchName] = useState('')
+  const [notifyUser, setNotifyUser] = useState('')
+  const [notifType, setNotifType] = useState('')
   const base_URL= 'http://localhost:3001/persons'
   useEffect(() => {
      console.log('effect')
@@ -27,7 +32,23 @@ const App = () => {
         const addPersonObj = { name: newName,
                               number: newPhoneno}
 
-        ServiceHandler.addNewContact(base_URL,addPersonObj).then(newData => setPersons(persons.concat(newData)))
+        ServiceHandler.addNewContact(base_URL,addPersonObj).then(newData => setPersons(persons.concat(newData))).catch(error =>
+        {
+          setNotifType('error')
+          setNotifyUser(`${addPersonObj.name} could not be added successfully`)
+          setTimeout(() => {
+        setNotifType(null)
+         setNotifyUser(null)}, 5000)
+        })
+
+         setNotifType('success')
+         setNotifyUser(`${addPersonObj.name} added successfully`)
+         setTimeout(() => {
+       setNotifType(null)
+        setNotifyUser(null)
+    }, 5000)
+
+
   //      setPersons(persons.concat(addPersonObj))
 
         }
@@ -37,22 +58,57 @@ const App = () => {
             if( window.confirm("confirm update",`${newName} is already there on the list, want to update with new phone no.`,[{text: 'Cancel'}])){
             const updatePerson = persons.filter((person)=> newName.toLowerCase() === person.name.toLowerCase())[0]
             ServiceHandler.updateContact(base_URL,{...updatePerson,number:newPhoneno})
-            .then(newData => setPersons(persons.map(person => person.id === newData.id ? newData : person )))
+            .then(newData => {setPersons(persons.map(person => person.id === newData.id ? newData : person )
+            )
+            setNotifType('success')
+            setNotifyUser(`${updatePerson.name} updated successfully`)
+            setTimeout(() => {
+          setNotifType(null)
+           setNotifyUser(null)
+       }, 5000)}).catch(error =>
+            {
+              setNotifType('error')
+              setNotifyUser(`${updatePerson.name} could not be updated successfully`)
+              setTimeout(() => {
+            setNotifType(null)
+             setNotifyUser(null)}, 5000)
+            })
+
           }
         setNewName("")
         setnewPhoneno("")
       }
       else if (newName.length === 0 && newPhoneno.length === 0)
       {
-        alert(`Please fill Name and Phone number`)
+        setNotifType('error')
+        setNotifyUser(`Please fill Name and Phone number`)
+
+        setTimeout(() => {
+        setNotifType(null)
+        setNotifyUser(null)
+   }, 5000)
       }
       else if (newName.length === 0 && newPhoneno.length > 0)
       {
-        alert(`Please fill Name`)
+        setNotifType('error')
+        setNotifyUser(`Please fill Name`)
+
+        setTimeout(() => {
+        setNotifType(null)
+        setNotifyUser(null)
+   }, 5000)
+
       }
       else
       {
-        alert(`Please fill Phone number`)
+        setNotifType('error')
+        setNotifyUser(`Please fill Phone number`)
+
+        setTimeout(() => {
+        setNotifType(null)
+        setNotifyUser(null)
+   }, 5000)
+
       }
     }
 
@@ -73,9 +129,10 @@ const App = () => {
   return (
    <div>
      <h2>Phonebook</h2>
+     <NotifyUser message={notifyUser} notifType={notifType}/>
      <h3>Add a new Contact</h3>
-
      <PersonForm currPhone={newPhoneno} currName={newName} handlePersonChange={handlePersonChange} handlenumberChange={handlenumberChange} addPerson={addPerson} />
+     <h3>Search in Contacts</h3>
      <SearchNamePart searchText={searchName} handleSearch={handleSearch} />
      <h3>Contact Numbers</h3>
      <DisplayContact addresses={persons} searchText={searchName} handleSearch={handleSearch} deleteHandler={deleteHandler} />
