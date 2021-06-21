@@ -113,8 +113,23 @@ const App = () => {
     }
 
     const deleteHandler=(id)=>{
-      console.log(ServiceHandler.deleteContact(base_URL,id))
-      setPersons(persons.filter((person => person.id !== id)))
+      ServiceHandler.deleteContact(base_URL,id).then(delData => {
+          setPersons(persons.filter((person => person.id !== id)))
+          setNotifType('success')
+          setNotifyUser(`${id} deleted successfully`)
+          setTimeout(() => {
+        setNotifType(null)
+         setNotifyUser(null)
+     }, 5000)
+   }).catch(error => {
+     setNotifType('error')
+     setNotifyUser(`${id} could not be deleted`)
+     setTimeout(() => {
+   setNotifType(null)
+    setNotifyUser(null)
+}, 5000)
+   })
+
     }
     const handleSearch = (event) => {
       setSearchName(event.target.value);
