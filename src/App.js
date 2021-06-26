@@ -117,7 +117,7 @@ const App = () => {
           setPersons(persons.filter((person => person.id !== id)))
           setSearchName('')
           setNotifType('success')
-          setNotifyUser(`${id} deleted successfully`)
+          setNotifyUser(`ID: ${id} deleted successfully`)
           setTimeout(() => {
         setNotifType(null)
          setNotifyUser(null)
