@@ -124,7 +124,7 @@ const App = () => {
      }, 5000)
    }).catch(error => {
      setNotifType('error')
-     setNotifyUser(`${id} could not be deleted`)
+     setNotifyUser(`ID: ${id} could not be deleted`)
      console.log(error);
      setTimeout(() => {
    setNotifType(null)
