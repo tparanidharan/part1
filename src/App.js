@@ -14,7 +14,7 @@ const App = () => {
   const [ searchName, setSearchName] = useState('')
   const [notifyUser, setNotifyUser] = useState('')
   const [notifType, setNotifType] = useState('')
-  const base_URL= 'https://paranijs.herokuapp.com/api/persons'
+  const base_URL= '/api/persons'
   useEffect(() => {
      console.log('effect')
     // console.log("inside effect",ServiceHandler.fetchInitialData(base_URL))
