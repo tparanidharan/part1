@@ -15,7 +15,7 @@ if(filteredAddresses.length > 0)
 else if (addresses.length > 0 && searchText.length === 0 ){
   return <>{addresses.map((address) =><p key={address.name}>{address.name} {address.number} <button onClick={()=> deleteHandler(address.id)}>Delete </button></p>) }</>
 }
-else if (addresses.length === 0){
+else if (addresses.length === 0 && searchText.length === 0 ){
 
   return <>Data Retrieving not complete or no contacts available</>
 }
