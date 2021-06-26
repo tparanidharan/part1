@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const fetchInitialData = (base_URL) =>
 {
-
+console.log('fetching Initial data')
   return axios.get(base_URL).then(response => response.data)
 }
 

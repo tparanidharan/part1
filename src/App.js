@@ -14,7 +14,7 @@ const App = () => {
   const [ searchName, setSearchName] = useState('')
   const [notifyUser, setNotifyUser] = useState('')
   const [notifType, setNotifType] = useState('')
-  const base_URL= 'http://localhost:3001/persons'
+  const base_URL= 'http://localhost:3001/api/persons'
   useEffect(() => {
      console.log('effect')
     // console.log("inside effect",ServiceHandler.fetchInitialData(base_URL))
@@ -115,6 +115,7 @@ const App = () => {
     const deleteHandler=(id)=>{
       ServiceHandler.deleteContact(base_URL,id).then(delData => {
           setPersons(persons.filter((person => person.id !== id)))
+          setSearchName('')
           setNotifType('success')
           setNotifyUser(`${id} deleted successfully`)
           setTimeout(() => {
@@ -124,6 +125,7 @@ const App = () => {
    }).catch(error => {
      setNotifType('error')
      setNotifyUser(`${id} could not be deleted`)
+     console.log(error);
      setTimeout(() => {
    setNotifType(null)
     setNotifyUser(null)

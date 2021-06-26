@@ -7,7 +7,7 @@ const DisplayContact= ({addresses,searchText,deleteHandler}) =>{
   const filteredAddresses= addresses.filter((address)=> address.name.toLowerCase().includes(searchText.toLowerCase()))
 //  console.log("filteredAddresses ",searchText, "pArani".toLowerCase().includes("".toLowerCase()),filteredAddresses)
 if(filteredAddresses.length > 0)
-  return <>   {filteredAddresses.map((address) =><p key={address.name}>{address.name} {address.number}</p>) }</>
+  return <>   {filteredAddresses.map((address) =><p key={address.name}>{address.name} {address.number} <button onClick={()=> deleteHandler(address.id)}>Delete </button></p>) }</>
   else {
       return <><p>Sorry no match found!</p></>
   }
