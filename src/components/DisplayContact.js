@@ -19,7 +19,7 @@ else if (addresses.length === 0 && searchText.length === 0 ){
 
   return <>Data Retrieving not complete or no contacts available</>
 }
-else return <></>
+else return <><p>Sorry no match found!</p></>
 }
 
 export default DisplayContact
