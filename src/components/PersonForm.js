@@ -1,13 +1,13 @@
 import React from 'react'
 
-const PersonForm = ({currName,currPhone,handlePersonChange,handlenumberChange,addPerson}) =>{
+const PersonForm = ({ currName, currPhone, handlePersonChange, handlenumberChange, addPerson }) => {
 
-return  <form onSubmit={addPerson}>
+  return <form onSubmit={addPerson}>
     <div>
-      name: <input value={currName} onChange={handlePersonChange}/>
+      name: <input value={currName} onChange={handlePersonChange} />
     </div>
     <div>
-      Phone#: <input type="text" pattern="[\d -]+" value={currPhone} onChange={handlenumberChange}/>
+      Phone#: <input type="text" pattern="[\d -]+" value={currPhone} onChange={handlenumberChange} />
     </div>
     <div>
       <button type="submit">add Person</button>
